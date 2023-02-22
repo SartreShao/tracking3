@@ -19,5 +19,29 @@ export default {
       console.log("getEventList failed", error);
       throw error;
     }
+  },
+
+  /**
+   * 根据 EventList 查询其无限集的 value
+   * @param {*} eventList 
+   * @returns 
+   */
+  getEventFiniteFieldValueList: async eventList => {
+    try {
+      const eventFiniteFieldValueList = await new AV.Query(
+        "event_mtm_finite_field_value"
+      )
+        .containedIn("event", eventList)
+        .find();
+
+      const result = eventFiniteFieldValueList.map(eventFiniteFieldValue =>
+        eventFiniteFieldValue.toFullJSON()
+      );
+      console.log("getEventFiniteFieldValueList successful", result);
+      return result;
+    } catch (error) {
+      console.log("getEventFiniteFieldValueList failed", error);
+      throw error;
+    }
   }
 };
