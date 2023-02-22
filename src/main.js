@@ -1,6 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+const AV = require('leancloud-storage');
+
+AV.init({
+  appId: "aO6MQp5g8ncVqL2K1Igp1KQA-MdYXbMMI",
+  appKey: "kKLi62t5UmHx1ZieDvV764MF",
+  serverURL: "https://api.tracking3.com"
+});
 
 import './assets/main.css'
 
