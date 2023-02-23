@@ -13,7 +13,9 @@ const session_id = ref("");
 
 const eventTestCaseList = ref([]);
 
-VM.getEventTestCaseList(prd_link, eventTestCaseList);
+const click_generateTestcase = () => {
+  VM.getEventTestCaseList(prd_link, eventTestCaseList);
+};
 </script>
 
 <template>
@@ -25,7 +27,9 @@ VM.getEventTestCaseList(prd_link, eventTestCaseList);
         v-model="prd_link"
         placeholder="Please input prd link"
       />
-      <el-button type="primary">Generate Testcase</el-button>
+      <el-button type="primary" @click="click_generateTestcase"
+        >Generate Testcase</el-button
+      >
     </div>
 
     <!-- session_id 输入框 -->

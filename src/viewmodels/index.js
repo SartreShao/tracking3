@@ -111,6 +111,7 @@ const getEventList = async prd_link => {
 
     // 删除 event 中的无用属性 finiteFieldValueList
     delete event.finiteFieldValueList;
+    // delete event.field_list;
   }
 
   return eventList;
@@ -181,6 +182,14 @@ const getEventTestCaseList = async (prd_link, eventTestCaseList) => {
     eventTestCaseList.value = generateTestCase(eventList);
 
     console.log("eventTestCaseList generated", eventTestCaseList.value);
+    try {
+      console.log(
+        "eventTestCaseList generated",
+        JSON.stringify(eventTestCaseList.value)
+      );
+    } catch (error) {
+      console.error(error);
+    }
   } catch (error) {}
 };
 
