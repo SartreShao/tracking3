@@ -1,5 +1,8 @@
 <template>
-  <div class="finite_field_value_item">
+  <div
+    class="finite_field_value_item"
+    :class="{ 'test-focus': finiteFieldValue.is_test_focus }"
+  >
     <div>
       {{ finiteFieldValue.finite_field.description }}｜{{
         finiteFieldValue.description
@@ -24,7 +27,11 @@ defineProps({
   flex-direction: column;
   font-size: 14px;
   margin-left: 20px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.test-focus {
+  color: red;
 }
 </style>
