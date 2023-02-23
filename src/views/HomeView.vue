@@ -1,7 +1,7 @@
 <script setup>
 import VM from "@/viewmodels/index.js";
 import { ref } from "vue";
-import TestCaseItem from "@/views/TestCaseItem.vue";
+import EventItem from "@/views/EventItem.vue";
 
 // 要查询的 PRD 文档，对应的数据
 const prd_link = ref(
@@ -50,26 +50,11 @@ const click_generateTestcase = () => {
     <!-- 测试用例 容器 -->
     <div class="event-list">
       <!-- event-list-item -->
-      <div
-        class="event-item"
+      <event-item
         v-for="(event, eventIndex) in eventTestCaseList"
         :key="eventIndex"
-      >
-        <!-- event-title -->
-        <div class="event-title-container">
-          <div class="event-title">{{ event.name }}</div>
-          <el-button>Submit</el-button>
-        </div>
-
-        <!-- event-testcase-list -->
-        <div class="test-case-list">
-          <test-case-item
-            v-for="(testCase, testCaseIndex) in event.testCaseList"
-            :key="testCaseIndex"
-            :testCase="testCase"
-          ></test-case-item>
-        </div>
-      </div>
+        :event="event"
+      ></event-item>
     </div>
   </div>
 </template>
@@ -103,30 +88,6 @@ const click_generateTestcase = () => {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-
-    .event-item {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid #dee1e7;
-      margin-bottom: 10px;
-
-      .event-title-container {
-        margin: 20px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        .event-title {
-          font-size: 15px;
-        }
-      }
-
-      .test-case-list {
-        margin-left: 20px;
-        margin-right: 20px;
-        margin-bottom: 20px;
-      }
-    }
   }
 }
 </style>
