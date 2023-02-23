@@ -11,8 +11,6 @@ AV.init({
   serverURL: "https://api.tracking3.com"
 });
 
-import "./assets/main.css";
-
 const app = createApp(App);
 
 app.use(router);
