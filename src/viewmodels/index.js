@@ -176,7 +176,7 @@ const generateTestCase = eventList => {
  */
 const getEventTestCaseList = async (prd_link, eventTestCaseList) => {
   try {
-    const eventList = await getEventList(prd_link);
+    const eventList = await getEventList(prd_link.value);
 
     eventTestCaseList.value = generateTestCase(eventList);
 
