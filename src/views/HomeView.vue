@@ -117,6 +117,45 @@ const getEventList = async prd_link => {
   return eventList;
 };
 
+// 生成测试用例
+const generateTestCase = eventList => {
+  eventList.forEach(event => {
+    // 计算需要创建多少个测试用例
+    let testCaseNum = 1;
+
+    event.field_list.forEach(field => {
+      testCaseNum *= field.finite_field_value_list.length;
+    });
+
+    console.log("testCaseNum", testCaseNum);
+
+    // 创建测试用例数组
+    const testCaseList = [];
+
+    for (let i = 0; i < testCaseNum; i++) {
+      testCaseList.push({ finite_field_value_list: [] });
+    }
+
+    // 计算 finite_field_value 该为 testCaseList 的哪些 item 赋值
+    event.field_list.forEach(field => {
+      for (let i = 0; i < field.finite_field_value_list.length; i++) {
+        const finite_field_value = field.finite_field_value_list[i];
+        for (
+          let j = i;
+          j < (i + 1) * (testCaseNum / field.finite_field_value_list.length);
+          j++
+        ) {
+          testCaseList[j].finite_field_value_list.push(finite_field_value);
+        }
+      }
+    });
+
+    event.testCaseList = testCaseList;
+  });
+
+  return eventList;
+};
+
 //----------------------------------------------------------------
 
 // 要查询的 PRD 文档，对应的数据
@@ -126,6 +165,10 @@ const prd_link =
 const eventList = await getEventList(prd_link);
 
 console.log("eventList", eventList);
+
+const eventTestCaseList = generateTestCase(eventList);
+
+console.log("eventTestCaseList", eventTestCaseList);
 </script>
 
 <template>
