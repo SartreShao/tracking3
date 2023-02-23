@@ -11,6 +11,12 @@ const prd_link = ref(
 // 要查询的 session_id
 const session_id = ref("");
 
+// 要查询的 mid
+const mid = ref("");
+
+// 要查询的 uid
+const uid = ref("");
+
 const eventTestCaseList = ref([]);
 
 const click_generateTestcase = () => {
@@ -25,7 +31,7 @@ const click_generateTestcase = () => {
       <el-input
         class="input"
         v-model="prd_link"
-        placeholder="Please input prd link"
+        placeholder="PRD Document Link"
       />
       <el-button type="primary" @click="click_generateTestcase"
         >Generate Testcase</el-button
@@ -34,11 +40,11 @@ const click_generateTestcase = () => {
 
     <!-- session_id 输入框 -->
     <div class="session-id-container">
-      <el-input
-        class="input"
-        v-model="session_id"
-        placeholder="Please input session_id"
-      />
+      <el-input class="input" v-model="mid" placeholder="mid" />
+      <div style="width: 20px"></div>
+      <el-input class="input" v-model="uid" placeholder="uid" />
+      <div style="width: 20px"></div>
+      <el-input class="input" v-model="session_id" placeholder="session_id" />
     </div>
 
     <!-- 测试用例 容器 -->

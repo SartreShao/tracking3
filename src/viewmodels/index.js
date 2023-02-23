@@ -183,14 +183,7 @@ const getEventTestCaseList = async (prd_link, eventTestCaseList) => {
     eventTestCaseList.value = generateTestCase(eventList);
 
     console.log("eventTestCaseList generated", eventTestCaseList.value);
-    try {
-      console.log(
-        "eventTestCaseList generated",
-        CircularJSON.stringify(eventTestCaseList.value)
-      );
-    } catch (error) {
-      console.error(error);
-    }
+   
   } catch (error) {}
 };
 
