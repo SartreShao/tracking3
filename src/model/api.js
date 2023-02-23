@@ -23,8 +23,8 @@ export default {
 
   /**
    * 根据 EventList 查询其无限集的 value
-   * @param {*} eventList 
-   * @returns 
+   * @param {*} eventList
+   * @returns
    */
   getEventFiniteFieldValueList: async eventList => {
     try {
@@ -41,6 +41,52 @@ export default {
       return result;
     } catch (error) {
       console.log("getEventFiniteFieldValueList failed", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 获取有限集 List
+   * @param {*} finiteFieldValueIdList
+   * @returns
+   */
+  getFiniteFieldValueList: async finiteFieldValueIdList => {
+    try {
+      const finiteFieldValueList = finiteFieldValueIdList.map(objectId =>
+        AV.Object.createWithoutData("finite_field_value", objectId)
+      );
+
+      const result = (await AV.Object.fetchAll(finiteFieldValueList)).map(
+        object => object.toFullJSON()
+      );
+
+      console.log("getFiniteFieldValueList successful", result);
+      return result;
+    } catch (error) {
+      console.log("getFiniteFieldValueList failed", error);
+      throw error;
+    }
+  },
+
+  /**
+   * 获取字段名 List
+   * @param {*} fieldIdList 
+   * @returns 
+   */
+  getFieldList: async fieldIdList => {
+    try {
+      const fieldList = fieldIdList.map(objectId =>
+        AV.Object.createWithoutData("field", objectId)
+      );
+
+      const result = (await AV.Object.fetchAll(fieldList)).map(object =>
+        object.toFullJSON()
+      );
+
+      console.log("getFieldList successful", result);
+      return result;
+    } catch (error) {
+      console.log("getFieldList failed", error);
       throw error;
     }
   }
