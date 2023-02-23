@@ -1,10 +1,10 @@
 <script setup>
-import TheWelcome from "../components/TheWelcome.vue";
 import Api from "@/model/api.js";
 import AV from "leancloud-storage";
 
 //-----------------------函数-------------------------------------
 
+// 获取上报事件列表
 const getEventList = async prd_link => {
   //----------------------------------------------------------------
   // 1. 获取数据
@@ -133,13 +133,25 @@ const generateTestCase = eventList => {
     const testCaseList = [];
 
     for (let i = 0; i < testCaseNum; i++) {
-      testCaseList.push({ finite_field_value_list: [] });
+      testCaseList.push({
+        finite_field_value_list: [],
+        infinite_field_value_list: [],
+        is_tested: false
+      });
     }
 
     // 计算 finite_field_value 该为 testCaseList 的哪些 item 赋值
     event.field_list.forEach(field => {
       for (let i = 0; i < field.finite_field_value_list.length; i++) {
         const finite_field_value = field.finite_field_value_list[i];
+
+        // 标记测试重点数据
+        if (field.finite_field_value_list.length === 1) {
+          finite_field_value.is_test_focus = false;
+        } else {
+          finite_field_value.is_test_focus = true;
+        }
+
         for (
           let j = i;
           j < (i + 1) * (testCaseNum / field.finite_field_value_list.length);
@@ -172,7 +184,5 @@ console.log("eventTestCaseList", eventTestCaseList);
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div>hello</div>
 </template>
