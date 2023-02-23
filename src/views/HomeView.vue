@@ -77,6 +77,43 @@ const getEventList = async prd_link => {
       );
     }
   }
+
+  // 重组 fieldList 结构，变为 event -> field -> finite_field_value
+  for (let i = 0; i < eventList.length; i++) {
+    const event = eventList[i];
+    event.field_list = [];
+
+    // 赋值 fieldMap，其中存储着不重复的 field
+    const fieldMap = new Map();
+    for (let j = 0; j < event.finiteFieldValueList.length; j++) {
+      const finiteField = event.finiteFieldValueList[j].finite_field;
+      fieldMap.set(finiteField.objectId, finiteField);
+    }
+
+    fieldMap.forEach(field => {
+      event.field_list.push(field);
+    });
+
+    event.field_list.forEach(field => {
+      field.finite_field_value_list = [];
+    });
+
+    // 将 finite_field_value 赋值到 field 下
+    for (let j = 0; j < event.finiteFieldValueList.length; j++) {
+      const finiteFieldValue = event.finiteFieldValueList[j];
+
+      for (let k = 0; k < event.field_list.length; k++) {
+        const field = event.field_list[k];
+        if (finiteFieldValue.finite_field.objectId === field.objectId) {
+          field.finite_field_value_list.push(finiteFieldValue);
+        }
+      }
+    }
+
+    // 删除 event 中的无用属性 finiteFieldValueList
+    delete event.finiteFieldValueList;
+  }
+
   return eventList;
 };
 
@@ -87,8 +124,8 @@ const prd_link =
   "https://st94nif1cq.feishu.cn/wiki/wikcnT2mkPqNbbRklhri8rszPMg";
 
 const eventList = await getEventList(prd_link);
-console.log("eventList", eventList);
 
+console.log("eventList", eventList);
 </script>
 
 <template>
