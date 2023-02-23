@@ -1,5 +1,6 @@
 import Api from "@/model/api.js";
 import AV from "leancloud-storage";
+import CircularJSON from "circular-json";
 
 //-----------------------函数-------------------------------------
 
@@ -185,7 +186,7 @@ const getEventTestCaseList = async (prd_link, eventTestCaseList) => {
     try {
       console.log(
         "eventTestCaseList generated",
-        JSON.stringify(eventTestCaseList.value)
+        CircularJSON.stringify(eventTestCaseList.value)
       );
     } catch (error) {
       console.error(error);
