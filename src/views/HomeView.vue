@@ -1,7 +1,8 @@
 <script setup>
 import VM from "@/viewmodels/index.js";
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import EventItem from "@/views/EventItem.vue";
+import Store from "@/store";
 
 // 要查询的 PRD 文档，对应的数据
 const prd_link = ref(
@@ -9,14 +10,15 @@ const prd_link = ref(
 );
 
 // 要查询的 session_id
-const session_id = ref("");
+const session_id = inject(Store.session_id);
 
 // 要查询的 mid
-const mid = ref("");
+const mid = inject(Store.mid);
 
 // 要查询的 uid
-const uid = ref("");
+const uid = inject(Store.uid);
 
+// 生成的测试用例列表
 const eventTestCaseList = ref([]);
 
 const click_generateTestcase = () => {
