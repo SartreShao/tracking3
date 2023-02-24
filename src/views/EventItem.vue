@@ -21,6 +21,7 @@
 import TestCaseItem from "@/views/TestCaseItem.vue";
 import Store from "@/store";
 import { inject } from "vue";
+import { ElMessageBox } from "element-plus";
 
 defineProps({
   event: Object
@@ -78,6 +79,14 @@ const click_submit = event => {
   }
 
   console.log("submit", JSON.stringify(submitResult));
+
+  ElMessageBox.confirm(JSON.stringify(submitResult))
+    .then(() => {
+      done();
+    })
+    .catch(() => {
+      // catch error
+    });
 };
 </script>
 
