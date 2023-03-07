@@ -239,6 +239,13 @@ const getTestReport = async (eventTestCaseList, mid, uid, session_id) => {
 
   ElMessageBox.confirm(JSON.stringify(submitResultList))
     .then(() => {
+      ElMessageBox.confirm("测试报告地址：https://st94nif1cq.feishu.cn/base/bascn8H5SJTjXRnpUamjP9nu5jd")
+        .then(() => {
+          done();
+        })
+        .catch(() => {
+          // catch error
+        });
       done();
     })
     .catch(() => {
