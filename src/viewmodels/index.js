@@ -1,6 +1,7 @@
 import Api from "@/model/api.js";
 import AV from "leancloud-storage";
 import CircularJSON from "circular-json";
+import { ElMessageBox } from "element-plus";
 
 //-----------------------函数-------------------------------------
 
@@ -120,7 +121,7 @@ const getEventList = async prd_link => {
 
 // 生成测试用例
 const generateTestCase = eventList => {
-  eventList.forEach(event => {
+  eventList.forEach((event, event_index) => {
     // 计算需要创建多少个测试用例
     let testCaseNum = 1;
 
@@ -137,7 +138,8 @@ const generateTestCase = eventList => {
       testCaseList.push({
         finite_field_value_list: [],
         infinite_field_value_list: [],
-        is_tested: false
+        is_tested: false,
+        id: `${event_index + 1}-${i + 1}`
       });
     }
 
@@ -166,6 +168,8 @@ const generateTestCase = eventList => {
     event.testCaseList = testCaseList;
   });
 
+  console.log("eventList", eventList);
+
   return eventList;
 };
 
@@ -183,10 +187,66 @@ const getEventTestCaseList = async (prd_link, eventTestCaseList) => {
     eventTestCaseList.value = generateTestCase(eventList);
 
     console.log("eventTestCaseList generated", eventTestCaseList.value);
-   
   } catch (error) {}
 };
 
+/**
+ * 生成测试报告请求函数
+ */
+const getTestReport = async (eventTestCaseList, mid, uid, session_id) => {
+  const submitResultList = [];
+  eventTestCaseList.value.forEach(event => {
+    const submitResult = {
+      event: {
+        objectId: event.objectId,
+        name: event.name,
+        description: event.description
+      },
+      testCaseList: [],
+      limitField: {
+        mid: mid.value,
+        uid: uid.value,
+        session_id: session_id.value
+      }
+    };
+
+    for (let i = 0; i < event.testCaseList.length; i++) {
+      const testCase = event.testCaseList[i];
+      if (testCase.is_tested) {
+        const submitTestCase = [];
+        testCase.finite_field_value_list.forEach(finite_field_value => {
+          submitTestCase.push({
+            field: {
+              objectId: finite_field_value.finite_field.objectId,
+              name: finite_field_value.finite_field.name,
+              description: finite_field_value.finite_field.description,
+              is_finite: finite_field_value.finite_field.is_finite,
+              extra: finite_field_value.finite_field.extra
+            },
+            value: {
+              objectId: finite_field_value.objectId,
+              name: finite_field_value.name,
+              description: finite_field_value.description
+            }
+          });
+        });
+        submitResult.testCaseList.push(submitTestCase);
+      }
+    }
+
+    submitResultList.push(submitResult);
+  });
+
+  ElMessageBox.confirm(JSON.stringify(submitResultList))
+    .then(() => {
+      done();
+    })
+    .catch(() => {
+      // catch error
+    });
+};
+
 export default {
-  getEventTestCaseList
+  getEventTestCaseList,
+  getTestReport
 };

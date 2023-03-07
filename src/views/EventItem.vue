@@ -3,7 +3,7 @@
     <!-- event-title -->
     <div class="event-title-container">
       <div class="event-title">{{ event.name }}</div>
-      <el-button @click="click_submit(event)">Submit</el-button>
+      <el-button v-if="false" @click="click_submit(event)">Submit</el-button>
     </div>
 
     <!-- event-testcase-list -->

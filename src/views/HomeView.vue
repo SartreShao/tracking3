@@ -21,8 +21,13 @@ const uid = inject(Store.uid);
 // 生成的测试用例列表
 const eventTestCaseList = ref([]);
 
+// 生成测试用例
 const click_generateTestcase = () => {
   VM.getEventTestCaseList(prd_link, eventTestCaseList);
+};
+
+const click_submitTestCase = () => {
+  VM.getTestReport(eventTestCaseList, mid, uid, session_id);
 };
 </script>
 
@@ -57,6 +62,15 @@ const click_generateTestcase = () => {
         :key="eventIndex"
         :event="event"
       ></event-item>
+
+      <el-button
+        style="height: 45px"
+        v-if="eventTestCaseList.length !== 0"
+        type="primary"
+        @click="click_submitTestCase"
+      >
+        Submit
+      </el-button>
     </div>
   </div>
 </template>

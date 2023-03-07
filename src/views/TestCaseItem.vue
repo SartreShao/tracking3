@@ -1,6 +1,8 @@
 <template>
   <div class="test-case-item">
     <div class="finite-field-list">
+      <div class="test-case-id">CaseId: {{ testCase.id }}</div>
+
       <finite-field-value-item
         v-for="(item, index) in testCase.finite_field_value_list"
         :key="index"
@@ -28,6 +30,13 @@ defineProps({
 </script>
 
 <style lang="scss" scope>
+.test-case-id {
+  margin-top: 20px;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
 .test-case-item {
   border: 1px solid #dee1e7;
   margin-bottom: 10px;
